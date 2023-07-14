@@ -1569,8 +1569,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u521D\u3081\u307E\u3057\u3066\u3001\u307C\u304F\u306F\u96F7\u306E\u30D4\u30F3\n\u3053\u306E\u4E16\u754C\u306B\u306F\u4E0D\u601D\u8B70\u306A\u529B\u3092\u6301\u3064\u30D4\u30F3\u304C\u305F\u304F\u3055\u3093\u3044\u308B\u3093\u3060\u3001\n\u305D\u306E\u4E2D\u3067\u3082\u4E00\u3064\u306E\u4E0D\u601D\u8B70\u306A\u6027\u8CEA\u3092\u7D39\u4ECB\u3059\u308B\u3088"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ee4279b202d0fa6479b7f99c5b7019ea, type: 2}
-  m_sharedMaterial: {fileID: -1008699155664078485, guid: ee4279b202d0fa6479b7f99c5b7019ea, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
