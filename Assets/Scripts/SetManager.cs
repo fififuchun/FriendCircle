@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SetManager : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class SetManager : MonoBehaviour
     //canvasをStartで自動入力
     public GameObject bottomGameImage;
     //その名の通り
+    public GameObject pauseImage;
+    //全画面のpauseImageのGameObject
+    public Sprite resumeImageForPrefab;
+    //再生ボタンのsprite
+    public Sprite pauseImageForPrefab;
+    //停止ボタンのsprite
+    public GameObject pauseButton;
+    //settingButtonの子どものpauseButton
+    // public GoogleRewardAds rewardAds;
 
     public List<int> playerActionList = new List<int>();
     //行動を示す番号付け
@@ -28,7 +38,12 @@ public class SetManager : MonoBehaviour
         gameControllerArray = new GameController[setArray.Count()];
         for (int i = 0; i < setArray.Count(); i++) gameControllerArray[i] = GameObject.FindGameObjectsWithTag("GameController")[i].GetComponent<GameController>();
         for (int i = 0; i < bottomGameImage.transform.childCount; i++) bottomChildrenTransform.Add(bottomGameImage.transform.GetChild(i).transform);
-        // playerActionList.Add(0);
+        pauseImage = Resources.Load<GameObject>("PauseImage Variant");
+        hintObject = Resources.Load<GameObject>("ForRewardAds");
+        resumeImageForPrefab = Resources.Load<Sprite>("pause");
+        pauseImageForPrefab = Resources.Load<Sprite>("stop2");
+        pauseButton = GameObject.FindWithTag("SettingButton").transform.GetChild(0).gameObject;
+        // rewardAds = GameObject.Find("RewardAdsManager").GetComponent<GoogleRewardAds>();
     }
 
     //List<string>型のsetFamiltListをHashSetに変換
@@ -195,9 +210,40 @@ public class SetManager : MonoBehaviour
         SceneManager.LoadScene("SelectScene");
     }
 
-    public void PushSettingButton()
+    private bool isPause;
+    private GameObject pauseObject;
+    public void PushPauseButton()
     {
-        
+        if (isPause) return;
+        pauseObject = Instantiate(pauseImage, canvas.transform);
+        isPause = true;
+        pauseObject.transform.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(PushOneMoreButton);
+        pauseObject.transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(PushReturnButton);
+        pauseObject.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(PushResumeButton);
+    }
+
+    public void PushResumeButton()
+    {
+        Destroy(pauseObject);
+        isPause = false;
+    }
+
+    private GameObject hintObject;
+    private bool isHint;
+    public void PushHintButton()
+    {
+        if (isHint) return;
+        Instantiate(hintObject, canvas.transform);
+        isHint = true;
+        //hintObject.transform.GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(ADs);
+        hintObject.transform.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(PushReturnToGameButton);
+        Debug.Log(hintObject.name);
+    }
+
+    public void PushReturnToGameButton()
+    {
+        DestroyImmediate(hintObject, true);
+        isHint = false;
     }
 
     public void PushClearButton()

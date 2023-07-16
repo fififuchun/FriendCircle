@@ -11,7 +11,11 @@ public class Game1_3 : MonoBehaviour
 
     void Start()
     {
-        //
+        Debug.Log(PlayerPrefs.GetInt("StageNum", 1));
+        if (PlayerPrefs.GetInt("StageNum", 1) == 6)
+        {
+            explains.SetActive(true);
+        }
     }
 
     void Update()
@@ -20,5 +24,21 @@ public class Game1_3 : MonoBehaviour
 
         if (onlySet.setFamilyList.Contains("ab") && onlySet.setFamilyList.Contains("Empty") && !gameOver.activeSelf) gameClear.SetActive(true);
         else gameClear.SetActive(false);
+    }
+
+    public GameObject explains;
+    public GameObject[] explainImages = new GameObject[3];
+    private int i = 0;
+
+    public void PushExplainButton()
+    {
+        if (i == 0) explainImages[1].SetActive(true);
+        else if (i == 1) explainImages[2].SetActive(true);
+        else
+        {
+            explains.SetActive(false);
+            return;
+        }
+        i++;
     }
 }

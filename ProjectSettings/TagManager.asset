@@ -8,6 +8,7 @@ TagManager:
   - Content
   - PlayerButton
   - Pause
+  - SettingButton
   layers:
   - Default
   - TransparentFX
