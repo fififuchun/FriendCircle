@@ -19,7 +19,8 @@ public class SetManager : MonoBehaviour
     //停止ボタンのsprite
     public GameObject pauseButton;
     //settingButtonの子どものpauseButton
-    // public GoogleRewardAds rewardAds;
+    public GoogleRewardAds rewardAdsManager;
+    //リワード広告をアタッチしたオブジェクトのインスタンス化
 
     public List<int> playerActionList = new List<int>();
     //行動を示す番号付け
@@ -39,11 +40,11 @@ public class SetManager : MonoBehaviour
         for (int i = 0; i < setArray.Count(); i++) gameControllerArray[i] = GameObject.FindGameObjectsWithTag("GameController")[i].GetComponent<GameController>();
         for (int i = 0; i < bottomGameImage.transform.childCount; i++) bottomChildrenTransform.Add(bottomGameImage.transform.GetChild(i).transform);
         pauseImage = Resources.Load<GameObject>("PauseImage Variant");
-        hintObject = Resources.Load<GameObject>("ForRewardAds");
+        hintPrefab = Resources.Load<GameObject>("ForRewardAds");
         resumeImageForPrefab = Resources.Load<Sprite>("pause");
         pauseImageForPrefab = Resources.Load<Sprite>("stop2");
         pauseButton = GameObject.FindWithTag("SettingButton").transform.GetChild(0).gameObject;
-        // rewardAds = GameObject.Find("RewardAdsManager").GetComponent<GoogleRewardAds>();
+        rewardAdsManager = GameObject.Find("RewardAdsManager").GetComponent<GoogleRewardAds>();
     }
 
     //List<string>型のsetFamiltListをHashSetに変換
@@ -215,6 +216,7 @@ public class SetManager : MonoBehaviour
     public void PushPauseButton()
     {
         if (isPause) return;
+        if (isHint) PushReturnToGameButton();
         pauseObject = Instantiate(pauseImage, canvas.transform);
         isPause = true;
         pauseObject.transform.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(PushOneMoreButton);
@@ -228,21 +230,27 @@ public class SetManager : MonoBehaviour
         isPause = false;
     }
 
+    private GameObject hintPrefab;
     private GameObject hintObject;
     private bool isHint;
     public void PushHintButton()
     {
         if (isHint) return;
-        Instantiate(hintObject, canvas.transform);
         isHint = true;
+        hintObject = Instantiate(hintPrefab, canvas.transform);
         //hintObject.transform.GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(ADs);
         hintObject.transform.GetChild(1).gameObject.GetComponent<Button>().onClick.AddListener(PushReturnToGameButton);
-        Debug.Log(hintObject.name);
+        rewardAdsManager.LoadRewardedAd();
+    }
+
+    public void PushWatchAds()
+    {
+        rewardAdsManager.ShowRewardedAd();
     }
 
     public void PushReturnToGameButton()
     {
-        DestroyImmediate(hintObject, true);
+        Destroy(hintObject);
         isHint = false;
     }
 

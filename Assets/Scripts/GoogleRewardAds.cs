@@ -18,7 +18,7 @@ public class GoogleRewardAds : MonoBehaviour
 
     //リワード広告
     private RewardedAd rewardedAd;
-
+    // private Reward
     public void Start()
     {
         // Initialize the Google Mobile Ads SDK.
@@ -28,6 +28,7 @@ public class GoogleRewardAds : MonoBehaviour
         });
     }
 
+    //動画をロードする
     /// <summary>
     /// Loads the rewarded ad.
     /// </summary>
@@ -116,4 +117,29 @@ public class GoogleRewardAds : MonoBehaviour
                         "with error : " + error);
         };
     }
+
+    //終わったら
+    // rewardedAd.Destroy();
+
+    //次の広告の準備
+    // private void RegisterReloadHandler(RewardedAd ad)
+    // {
+    //     // Raised when the ad closed full screen content.
+    //     ad.OnAdFullScreenContentClosed += ()
+    //     {
+    //         Debug.Log("Rewarded Ad full screen content closed.");
+
+    //         // Reload the ad so that we can show another as soon as possible.
+    //         LoadRewardedAd();
+    //     };
+    //     // Raised when the ad failed to open full screen content.
+    //     ad.OnAdFullScreenContentFailed += (AdError error) =>
+    //     {
+    //         Debug.LogError("Rewarded ad failed to open full screen content " +
+    //                     "with error : " + error);
+
+    //         // Reload the ad so that we can show another as soon as possible.
+    //         LoadRewardedAd();
+    //     };
+    // }
 }
